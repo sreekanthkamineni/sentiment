@@ -1,0 +1,75 @@
+<html>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <body>
+        <h1>Requested hashtag is : {{Hashtag}}</h1>
+        <h1>Total tweets validated : {{totals}}</h1>
+<div>
+    <canvas id="myChart"></canvas>
+  </div>
+  {% block messages %}
+  {% if messages %}
+      <div class="container" style="color: firebrick; margin-top: 20px" >
+      {% for message in messages %}
+          {{ message }}
+      {% endfor %}
+      </div>
+  {% endif %}
+{% endblock %}
+  
+</body>
+
+  </html>
+
+  <script>
+    const labels = {{dates|safe}};
+  
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: 'Positive tweets',
+        backgroundColor: 'rgb(0, 255, 0)',
+        borderColor: 'rgb(255, 0, 0)',
+        data: {{Positive_data}},
+      },
+      {
+        label: 'Negarive tweets',
+        backgroundColor: 'rgb(255, 0, 0)',
+        borderColor: 'rgb(255, 0, 0)',
+        data: {{negative_data}},
+      },
+      {
+        label: 'Nutral tweets',
+        backgroundColor: 'rgb(255, 255, 255)',
+        borderWidth:1,
+        borderColor: 'rgb(51, 153, 255)',
+        data: {{Nutral_data}},
+      }
+
+    ]
+    };
+  
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Sentiment analysis'
+      }
+    }
+    }
+};
+  </script>
+
+<script>
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+  </script>
